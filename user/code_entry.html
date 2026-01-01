@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Game Code - User</title>
+    <link rel="stylesheet" href="user.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Enter Game Code</h1>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">
+            Please enter the 4-digit code provided by the admin.
+        </p>
+        <form id="codeForm">
+            <label for="gameCode">Game Code</label>
+            <input type="text" id="gameCode" name="gameCode" required placeholder="XXXX" maxlength="4"
+                style="text-align: center; letter-spacing: 5px; font-size: 1.5rem;" />
+
+            <button type="submit" class="btn">Enter Game</button>
+        </form>
+    </div>
+    <script src="code_entry.js"></script>
+</body>
+
+</html>

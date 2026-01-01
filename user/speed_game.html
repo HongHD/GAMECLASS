@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Game - Buzzer</title>
+    <link rel="stylesheet" href="user.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: var(--bg-gradient);
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        .buzzer-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .buzzer-btn {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: none;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
+            box-shadow:
+                0 10px 20px rgba(0, 0, 0, 0.4),
+                inset 0 5px 15px rgba(255, 255, 255, 0.4),
+                inset 0 -5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .buzzer-btn:active {
+            transform: scale(0.95);
+            box-shadow:
+                0 5px 10px rgba(0, 0, 0, 0.4),
+                inset 0 5px 20px rgba(0, 0, 0, 0.3);
+            background: radial-gradient(circle at 30% 30%, #e74c3c, #a93226);
+        }
+
+        .buzzer-btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: scale(1);
+        }
+
+        .status-message {
+            margin-top: 50px;
+            font-size: 2rem;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.5);
+            animation: ripple-anim 1.5s infinite;
+            z-index: 1;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            0% {
+                width: 100%;
+                height: 100%;
+                opacity: 0.8;
+            }
+
+            100% {
+                width: 200%;
+                height: 200%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buzzer-container">
+        <button id="buzzerBtn" class="buzzer-btn" disabled></button>
+        <div id="rippleEffect" class="ripple" style="display: none;"></div>
+    </div>
+    <div id="statusMessage" class="status-message">Waiting for Admin...</div>
+
+    <script>
+        const buzzerBtn = document.getElementById('buzzerBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const rippleEffect = document.getElementById('rippleEffect');
+
+        let isBuzzed = false;
+
+        // SSE Connection
+        const evtSource = new EventSource('/api/game/events');
+
+        evtSource.addEventListener('SPEED_GAME_START', (e) => {
+            if (!isBuzzed) {
+                buzzerBtn.disabled = false;
+                statusMessage.textContent = 'GO! Press the Buzzer!';
+                statusMessage.style.color = '#2ecc71';
+                rippleEffect.style.display = 'block';
+            }
+        });
+
+        evtSource.addEventListener('SPEED_GAME_RESET', (e) => {
+            isBuzzed = false;
+            buzzerBtn.disabled = true;
+            statusMessage.textContent = 'Waiting for Admin...';
+            statusMessage.style.color = '#fff';
+            rippleEffect.style.display = 'none';
+        });
+
+        evtSource.addEventListener('force_logout', (e) => {
+            window.location.href = 'index.html';
+        });
+
+        buzzerBtn.addEventListener('click', async () => {
+            if (isBuzzed) return;
+
+            try {
+                // Optimistic UI update
+                buzzerBtn.disabled = true;
+                rippleEffect.style.display = 'none';
+                statusMessage.textContent = 'Buzzed!';
+                isBuzzed = true;
+
+                const res = await fetch('/api/game/speed/buzz', { method: 'POST' });
+                const data = await res.json();
+
+                if (res.ok) {
+                    statusMessage.textContent = `Rank: ${data.rank}`;
+                } else {
+                    statusMessage.textContent = data.message || 'Error';
+                    // If error (e.g. already buzzed), keep disabled
+                }
+            } catch (err) {
+                console.error(err);
+                statusMessage.textContent = 'Network Error';
+            }
+        });
+    </script>
+</body>
+
+</html>

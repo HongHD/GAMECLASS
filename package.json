@@ -1,0 +1,23 @@
+{
+  "name": "quiz-admin",
+  "version": "1.0.0",
+  "description": "Admin page for registering quizzes",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2",
+    "mysql2": "^3.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting - Quiz Game</title>
+    <link rel="stylesheet" href="user.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: var(--bg-gradient);
+            overflow: hidden;
+        }
+
+        .waiting-text {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #FFD700;
+            /* Yellow */
+            text-transform: uppercase;
+            text-align: center;
+            animation: pulse 2s infinite;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .game-start-text {
+            color: var(--success-color);
+            font-size: 5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="statusText" class="waiting-text">대기중</div>
+
+    <script>
+        const statusText = document.getElementById('statusText');
+
+        // Check initial status
+        fetch('/api/game/status')
+            .then(res => res.json())
+            .then(data => {
+                if (data.isStarted) {
+                    redirectToMain();
+                } else {
+                    connectSSE();
+                }
+            })
+            .catch(err => console.error(err));
+
+        function connectSSE() {
+            const evtSource = new EventSource('/api/game/events');
+
+            evtSource.addEventListener('start', (e) => {
+                console.log('Game Start Event Received');
+                statusText.textContent = '게임 시작';
+                statusText.classList.add('game-start-text');
+
+                setTimeout(() => {
+                    redirectToMain();
+                }, 1000);
+            });
+
+            evtSource.addEventListener('SPEED_GAME_ENTER', (e) => {
+                console.log('Speed Game Enter Event Received');
+                window.location.href = 'speed_game.html';
+            });
+
+            evtSource.addEventListener('force_logout', (e) => {
+                console.log('Force Logout Event Received');
+                window.location.href = 'index.html';
+            });
+
+            evtSource.onerror = (err) => {
+                console.error('SSE Error:', err);
+            };
+        }
+
+        function redirectToMain() {
+            const lastPage = localStorage.getItem('lastPage');
+            if (lastPage) {
+                localStorage.removeItem('lastPage');
+                window.location.href = lastPage;
+            } else {
+                window.location.href = 'main.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

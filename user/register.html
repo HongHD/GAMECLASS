@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - User</title>
+    <link rel="stylesheet" href="user.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form id="registerForm">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id" required placeholder="Choose an ID" />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Choose a password" />
+
+            <label for="tel">Phone Number</label>
+            <input type="tel" id="tel" name="tel" required placeholder="010-1234-5678" />
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <div class="link-text">
+            Already have an account? <a href="index.html">Login here</a>
+        </div>
+    </div>
+    <script src="register.js"></script>
+</body>
+
+</html>

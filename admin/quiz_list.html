@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz List - Admin</title>
+    <link rel="stylesheet" href="quiz_list.css" />
+    <!-- Google Fonts for Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Controls -->
+        <div class="header-controls">
+            <div
+                style="position: absolute; top: 10px; left: 10px; font-size: 1.5rem; font-weight: bold; color: #FFD700;">
+                CODE: <span id="gameCodeDisplay">----</span>
+            </div>
+            <div class="page-size-selector" style="margin-left: 200px;">
+                <select id="pageSizeSelect">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <span>/ page</span>
+                <span style="margin-left: 15px; color: var(--text-secondary);">Row selected: <span id="selectedCount"
+                        style="color: #fff;">0</span></span>
+            </div>
+            <div>
+                <button id="gameStartBtn" class="btn"
+                    style="background-color: var(--success-color); color: white; margin-right: 10px;">Game
+                    Start</button>
+                <button id="gameStopBtn" class="btn"
+                    style="background-color: var(--warning-color, #f39c12); color: white; margin-right: 10px;">Game
+                    Stop</button>
+                <button id="resetProgressBtn" class="btn"
+                    style="background-color: var(--error-color); color: white; margin-right: 10px;">Reset
+                    Progress</button>
+                <button id="monitoringBtn" class="btn"
+                    style="background-color: #3498db; color: white; margin-right: 10px;">Monitoring</button>
+                <button id="addQuizBtn" class="btn primary">+ New Quiz</button>
+                <span id="adminNameDisplay" style="color: white; margin-left: 15px; font-weight: bold;"></span>
+                <button id="logoutBtn" class="btn"
+                    style="background-color: #7f8c8d; color: white; margin-left: 10px;">Logout</button>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <table id="quizTable">
+                <thead>
+                    <tr>
+                        <th class="col-checkbox"><input type="checkbox" id="selectAll" /></th>
+                        <th>ID</th>
+                        <th>Group</th>
+                        <th>Title</th>
+                        <th>Contents</th>
+                        <th>Type</th>
+                        <th>Option 1</th>
+                        <th>Option 2</th>
+                        <th>Option 3</th>
+                        <th>Option 4</th>
+                        <th>Answer</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer Controls -->
+        <div class="footer-controls">
+            <div id="showingInfo">Showing 0 to 0 of 0 entries</div>
+            <div class="pagination" id="paginationControls">
+                <!-- Pagination buttons -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contents Edit Modal -->
+    <div id="contentsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Edit Contents</span>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="modalTextarea" placeholder="Enter quiz contents..."></textarea>
+                <div style="margin-top: 10px;">
+                    <label for="modalImageInput" style="display: block; margin-bottom: 5px; color: #333;">Attach Image
+                        (Optional):</label>
+                    <input type="file" id="modalImageInput" accept="image/*">
+                    <div id="modalImagePreview"
+                        style="margin-top: 10px; max-width: 100%; max-height: 200px; overflow: hidden;">
+                        <!-- Image preview will be shown here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="modalCancelBtn">Cancel</button>
+                <button class="btn primary" id="modalSaveBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="quiz_list.js"></script>
+</body>
+
+</html>

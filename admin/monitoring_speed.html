@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speed Game Monitoring - Admin</title>
+    <link rel="stylesheet" href="quiz_list.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .monitor-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .ranking-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ranking-item {
+            background: #333;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 2rem;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .ranking-item:nth-child(1) {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            color: #000;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .ranking-item:nth-child(2) {
+            background: linear-gradient(90deg, #C0C0C0, #A9A9A9);
+            color: #000;
+        }
+
+        .ranking-item:nth-child(3) {
+            background: linear-gradient(90deg, #CD7F32, #8B4513);
+            color: #fff;
+        }
+
+        .rank-num {
+            font-size: 3rem;
+            margin-right: 20px;
+            width: 60px;
+        }
+
+        .user-info {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .time-info {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="monitor-container" style="display: flex; gap: 20px; text-align: left;">
+        <div
+            style="position: absolute; top: -10px; left: 0; font-size: 2rem; font-weight: bold; color: #FFD700; z-index: 100;">
+            CODE: <span id="gameCodeDisplay">----</span>
+        </div>
+
+        <!-- Left Side: Connected Users -->
+        <div style="flex: 0 0 30%; background: #222; padding: 20px; border-radius: 10px;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #00BFFF; padding-bottom: 10px; margin-bottom: 10px;">
+                <h2 style="color: #00BFFF; margin: 0;">접속자 현황</h2>
+                <button id="forceLogoutBtn"
+                    style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Force
+                    Logout All</button>
+            </div>
+            <ul id="connectedUsersList"
+                style="list-style: none; padding: 0; margin: 0; max-height: 80vh; overflow-y: auto;">
+                <!-- Connected users will be injected here -->
+                <li style="color: #666; padding: 10px;">Waiting for users...</li>
+            </ul>
+        </div>
+
+        <!-- Right Side: Speed Game Ranking -->
+        <div style="flex: 1;">
+            <h1 style="text-align: center;">Speed Game Ranking</h1>
+            <div style="margin-bottom: 20px; text-align: right;">
+                <span id="adminNameDisplay"
+                    style="color: white; margin-right: 15px; font-weight: bold; font-size: 1.2rem;"></span>
+
+                <button id="startGameBtn" class="btn"
+                    style="background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.2rem; margin-right: 10px;">Start
+                    Game</button>
+
+                <button id="resetGameBtn" class="btn"
+                    style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; margin-right: 10px;">Reset
+                    Game</button>
+
+                <button id="backToDashboardBtn" class="btn"
+                    style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">Dashboard</button>
+            </div>
+            <ul id="rankingList" class="ranking-list">
+                <!-- Ranking items will be injected here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="monitoring_speed.js"></script>
+</body>
+
+</html>

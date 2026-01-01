@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Play - User</title>
+    <link rel="stylesheet" href="user.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="quiz-container">
+        <div id="quizCard" class="quiz-card">
+            <div class="quiz-header">
+                <span id="groupNameDisplay">Group</span>
+                <span id="progressDisplay">Loading...</span>
+            </div>
+
+            <div id="questionArea">
+                <div id="quizTitle" class="quiz-title">Question Title</div>
+                <div id="quizContent" class="quiz-content">Question content goes here...</div>
+
+                <!-- Image Area -->
+                <div id="quizImageArea" style="text-align: center; margin: 15px 0; display: none;">
+                    <img id="quizImage" src="" alt="Quiz Image"
+                        style="max-width: 100%; max-height: 300px; border-radius: 8px;">
+                </div>
+
+                <div id="optionsGrid" class="options-grid">
+                    <!-- Options will be injected here -->
+                </div>
+
+                <div id="shortAnswerArea" style="display: none;">
+                    <input type="text" id="shortAnswerInput" class="short-answer-input"
+                        placeholder="Type your answer here..." />
+                    <button id="submitAnswerBtn" class="submit-btn">제출</button>
+                </div>
+            </div>
+
+            <!-- Feedback Overlay -->
+            <div id="feedbackOverlay" class="feedback-overlay">
+                <div id="feedbackText" class="feedback-text"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button class="btn secondary" onclick="location.href='main.html'"
+                    style="width: 100%; margin-top: 10px;">뒤로</button>
+            </div>
+        </div>
+
+        <!-- Completion Screen (Hidden by default) -->
+        <div id="completionCard" class="quiz-card" style="display: none; text-align: center;">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Quiz Completed!</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">You have finished all questions in this group.</p>
+            <button class="btn" onclick="location.href='main.html'">Back to Main</button>
+        </div>
+    </div>
+    <script src="game_control.js"></script>
+    <script src="quiz_play.js"></script>
+</body>
+
+</html>

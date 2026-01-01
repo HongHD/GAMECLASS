@@ -1,0 +1,356 @@
+/* quiz_list.css */
+:root {
+    --bg-color: #1b1b29;
+    --panel-bg: #232336;
+    --header-bg: #2a2a40;
+    --border-color: #36364f;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0b0;
+    --accent-color: #00d4ff;
+    --success-color: #00d4ff;
+    --hover-bg: #2d2d45;
+    --input-bg: #161620;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 5px;
+}
+
+.page-size-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.page-size-selector select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.table-container {
+    flex: 1;
+    overflow: auto;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    position: relative;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--header-bg);
+}
+
+th,
+td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+}
+
+/* Center align headers as requested */
+th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    user-select: none;
+    text-align: center;
+    /* Centered */
+}
+
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+tbody tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Checkbox column */
+.col-checkbox {
+    width: 30px;
+    text-align: center;
+}
+
+input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    cursor: pointer;
+}
+
+/* Editable cells */
+.editable {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 4px;
+    border-radius: 3px;
+    color: var(--text-primary);
+    transition: all 0.2s;
+    min-height: 18px;
+}
+
+.editable:focus {
+    background: var(--input-bg);
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.editable[contenteditable="true"]:hover {
+    border-color: var(--border-color);
+}
+
+/* Select in table */
+.table-select {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    padding: 4px;
+    border-radius: 3px;
+    width: 100%;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.table-select:focus,
+.table-select:hover {
+    background: var(--input-bg);
+    border-color: var(--accent-color);
+}
+
+.table-select option {
+    background: var(--panel-bg);
+    color: var(--text-primary);
+}
+
+/* Contents cell styling (clickable) */
+.contents-cell {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+/* Buttons */
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn.primary {
+    background: var(--accent-color);
+    color: #000;
+    font-weight: 600;
+}
+
+.btn.primary:hover {
+    filter: brightness(1.1);
+}
+
+.saveBtn {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+.saveBtn:hover {
+    background: var(--accent-color);
+    color: #000;
+}
+
+/* Footer Pagination */
+.footer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-color);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.pagination button {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.pagination button.active {
+    background: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-overlay);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-header {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #fff;
+}
+
+.modal-body textarea {
+    width: 100%;
+    height: 200px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.modal-body textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a4a6a;
+}
